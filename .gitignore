@@ -1,0 +1,4 @@
+fdf
+*.o
+.DS_STORE
+*.a
