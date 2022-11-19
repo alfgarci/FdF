@@ -6,7 +6,7 @@
 #    By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 15:35:22 by alfgarci          #+#    #+#              #
-#    Updated: 2022/11/19 14:06:39 by alfgarci         ###   ########.fr        #
+#    Updated: 2022/11/19 14:10:50 by alfgarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,5 +78,8 @@ fclean:		clean
 
 re:		fclean all
 		@make re -s -C ${MLX_DIR}
+
+n:
+	@norminette src/ libft/
 
 .PHONY:	all clean fclean re
