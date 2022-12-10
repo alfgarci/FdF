@@ -6,7 +6,7 @@
 #    By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 15:35:22 by alfgarci          #+#    #+#              #
-#    Updated: 2022/11/19 14:10:50 by alfgarci         ###   ########.fr        #
+#    Updated: 2022/12/10 09:10:45 by alfgarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,13 @@ NC		=\033[0m
 NAME 	=	fdf
 	#---SRC
 SRC_DIR	=	src
-SRC 	=	${SRC_DIR}/main.c
+SRC 	=	${SRC_DIR}/main.c \
+			${SRC_DIR}/check_map.c \
+			${SRC_DIR}/print.c \
+			${SRC_DIR}/init_data.c \
+			${SRC_DIR}/bresenham.c \
+			${SRC_DIR}/utils.c \
+			${SRC_DIR}/color.c
 	#---OBJ
 OBJ 	=	${SRC:.c=.o}
 	#---INC
