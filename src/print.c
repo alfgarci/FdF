@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:52:32 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/11 15:32:23 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/11 22:09:30 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ static t_point	*make_point(int x, int y, t_fdf *fdf)
 	new->z = fdf->z[y][x];
 	new->color = fdf->color[y][x];
 	return (new);
+}
+
+void	draw_background(t_fdf *fdf)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < WIDTH)
+	{
+		j = -1;
+		while (++j < HEIGHT)
+			my_mlx_pixel_put(fdf->data, j, i, 0x18171C);
+	}
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -68,6 +82,7 @@ void	re_draw(t_fdf *fdf)
 	fdf->data->img = mlx_new_image(fdf->mlx, HEIGHT, WIDTH);
 	fdf->data->addr = mlx_get_data_addr(fdf->data->img, &fdf->data->bpp,
 			&fdf->data->line_l, &fdf->data->endian);
+	draw_background(fdf);
 	draw(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->data->img, 0, 0);
 }

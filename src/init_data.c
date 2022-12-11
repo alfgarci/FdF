@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 12:00:52 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/11 16:19:47 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/11 22:05:48 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	fill(t_fdf *fdf, char **data, int i, int j)
 	{
 		fdf->z[i][j] = ft_atoi(data[0]);
 		if (data[1] != NULL)
-			fdf->color[i][j] = (int)strtol(data[1], NULL, 16);
+			fdf->color[i][j] = str_to_hex(data[1]);
 		else
 			fdf->color[i][j] = 0xFFFFFF;
 	}

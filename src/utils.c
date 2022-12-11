@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 09:09:07 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/11 15:35:59 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/11 22:07:28 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,33 @@ int	module(int num)
 	return (num * -1);
 }
 
-void	free_split(char **split)
+static int	get_value(char c)
 {
-	int	aux;
+	int		i;
+	char	*base_l;
+	char	*base_u;
 
-	aux = -1;
-	while (*(split + ++aux))
-		free(*(split + aux));
-	free(split);
+	base_l = "0123456789abcdef";
+	base_u = "0123456789ABCDEF";
+	i = -1;
+	while (++i < 16)
+		if (base_l[i] == c || base_u[i] == c)
+			return (i);
+	return (-1);
 }
 
-void	free_fdf(t_fdf *fdf)
+int	str_to_hex(char *str)
 {
-	int	i;
+	int		i;
+	int		j;
+	int		len;
+	int		n;
 
-	i = -1;
-	while (++i < fdf->rows)
-	{
-		free(fdf->z[i]);
-		free(fdf->color[i]);
-	}
-	free(fdf->z);
-	free(fdf->color);
-	free(fdf->data);
-	free(fdf);
+	n = 0;
+	len = strlen(str) - 2;
+	j = len - 1;
+	i = 1;
+	while (str[++i])
+		n += (get_value(str[i]) * pow(16, j--));
+	return (n);
 }

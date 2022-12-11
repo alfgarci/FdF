@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 11:58:09 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/11 16:10:55 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/11 22:00:58 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_fdf	*init_data_fdf(char *path);
 void	draw(t_fdf *fdf);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	re_draw(t_fdf *fdf);
+void	draw_background(t_fdf *fdf);
 
 /*color.c*/
 int		get_color(int start, int end, int max, int i);
@@ -81,6 +82,9 @@ int		check_map(int fd, int *r, int *c);
 /*utils.c*/
 int		max_num(int a, int b);
 int		module(int num);
+int		str_to_hex(char *str);
+
+/*free_data.c*/
 void	free_split(char **split);
 void	free_fdf(t_fdf *fdf);
 
