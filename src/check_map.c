@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 09:48:42 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/10 10:10:18 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/11 12:35:57 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static int	count_elements(char *line)
 
 	i = 0;
 	elem = 0;
-	while (line[i] != '\n')
+	while (line[i] != '\n' && line[i] != '\0')
 	{
-		while (line[i] != '\n' && line[i] == 32)
+		while (line[i] != '\n' && line[i] == 32 && line[i] != '\0')
 			i++;
-		if (line[i] != '\n')
+		if (line[i] != '\n' && line[i] != '\0')
 			elem++;
-		while (line[i] != '\n' && line[i] != 32)
+		while (line[i] != '\n' && line[i] != 32 && line[i] != '\0')
 			i++;
 	}
 	return (elem);
@@ -42,19 +42,17 @@ int	check_map(int fd, int *r, int *c)
 	rows = 0;
 	line = get_next_line(fd);
 	cols = count_elements(line);
-	while (line)
+	elems = cols;
+	while (line && (elems == cols))
 	{
 		elems = count_elements(line);
-		if (elems != cols)
-		{
-			free(line);
-			return (0);
-		}
 		free(line);
 		line = get_next_line(fd);
 		rows++;
 	}
 	free(line);
+	if (elems != cols)
+		return (0);
 	*r = rows;
 	*c = cols;
 	return (1);

@@ -6,79 +6,87 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:49:55 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/10 10:27:53 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/11 15:30:54 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	perspective(float *x, float *y, float z, char p)
+static void	perspective(t_point *point, t_fdf *fdf)
 {
-	float	x_o = *x;
-	float	y_o = *y;
+	double	x_o;
+	double	y_o;
 
-	if (p == 'i')
+	x_o = point->x;
+	y_o = point->y;
+	if (fdf->view == 'i')
 	{
-		*x = (x_o - y_o) * cos(0.52);
-		*y = (x_o + y_o) * sin(0.52) - z;
+		point->x = (x_o - y_o) * cos(0.52);
+		point->y = (x_o + y_o) * sin(0.52) - (point->z * fdf->flat);
 	}
 }
 
-static void	resize(float *x, float *y, float *x2, float *y2, t_fdf *fdf)
+static void	resize(t_point	*s, t_point *e, t_fdf *fdf)
 {
-	*x *= fdf->zoom;
-	*x2 *= fdf->zoom;
-	*y *= fdf->zoom;
-	*y2 *= fdf->zoom;
-	*x += fdf->x_move;
-	*x2 += fdf->x_move;
-	*y += fdf->y_move;
-	*y2 += fdf->y_move;
+	s->x *= fdf->zoom;
+	e->x *= fdf->zoom;
+	s->y *= fdf->zoom;
+	e->y *= fdf->zoom;
+	s->x += fdf->x_move;
+	e->x += fdf->x_move;
+	s->y += fdf->y_move;
+	e->y += fdf->y_move;
 }
 
-void	bresenham(float x, float y, float x2, float y2, t_fdf *fdf)
+static t_alg	*get_init_data(t_point *s, t_point *e, t_fdf *fdf)
 {
-	float	x_move;
-	float	y_move;
+	t_alg	*instance;
 	int		max;
-	float	z;
-	float	z2;
+	double	copy_x;
+	double	copy_y;
+
+	copy_x = s->x;
+	copy_y = s->y;
+	instance = (t_alg *)malloc(sizeof(t_alg));
+	instance->x_move = e->x - s->x;
+	instance->y_move = e->y - s->y;
+	max = max_num(module(instance->x_move), module(instance->y_move));
+	instance->x_move /= max;
+	instance->y_move /= max;
+	instance->len_pixel = 0;
+	while ((int)(copy_x - e->x) || (int)(copy_y - e->y))
+	{
+		copy_x += instance->x_move;
+		copy_y += instance->y_move;
+		instance->len_pixel++;
+	}
+	return (instance);
+}
+
+void	bresenham(t_point *s, t_point *e, t_fdf *fdf)
+{
+	t_alg	*instance;
+	int		i;
 	int		color_s;
-	int 	i;
 	int		color_e;
-	float		cp_x;
-	int		num_pixel = 0;
-	float	cp_y;
+	int		color_tmp;
 
-	color_s = fdf->color[(int)y][(int)x];
-	color_e = fdf->color[(int)y2][(int)x2];
-	z = fdf->z[(int)y][(int)x] * fdf->flat;
-	z2 = fdf->z[(int)y2][(int)x2] * fdf->flat;
-	perspective(&x, &y, z, fdf->perspective);
-	perspective(&x2, &y2, z2, fdf->perspective);
-	resize(&x, &y, &x2, &y2, fdf);
-	x_move = x2 - x;
-	y_move = y2 - y;
-	max = max_num(module(x_move), module(y_move));
-	x_move /= max;
-	y_move /= max;
-	cp_x = x;
-	cp_y = y;
-
-	while ((int)(cp_x - x2) || (int)(cp_y - y2))
-	{
-		cp_x += x_move;
-		cp_y += y_move;
-		num_pixel++;
-	}
-
+	color_s = s->color;
+	color_e = e->color;
+	perspective(s, fdf);
+	perspective(e, fdf);
+	resize(s, e, fdf);
+	instance = get_init_data(s, e, fdf);
 	i = 0;
-	while ((int)(x - x2) || (int)(y - y2))
+	while ((int)(s->x - e->x) || (int)(s->y - e->y))
 	{
-		int act_col = get_color(color_s, color_e, num_pixel, i++);
-		if (x >= 0 && x < 1000 && y >= 0 && y < 800)
-			my_mlx_pixel_put(fdf->data , x, y, act_col);
-		x += x_move;
-		y += y_move;
+		color_tmp = get_color(color_s, color_e, instance->len_pixel, i++);
+		if (s->x >= 0 && s->x < HEIGHT && s->y >= 0 && s->y < WIDTH)
+			my_mlx_pixel_put(fdf->data, s->x, s->y, color_tmp);
+		s->x += instance->x_move;
+		s->y += instance->y_move;
 	}
+	free(instance);
+	free(s);
+	free(e);
 }

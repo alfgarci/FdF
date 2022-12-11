@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 12:00:52 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/10 10:00:50 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/11 16:19:47 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,33 @@ static	void	reserve_memory(t_fdf *fdf)
 
 	i = -1;
 	fdf->z = (int **)malloc(sizeof(int *) * fdf->rows);
-	while (++i < fdf->colums)
-		fdf->z[i] = (int *)malloc(sizeof(int) * fdf->colums);
-	i = -1;
 	fdf->color = (int **)malloc(sizeof(int *) * fdf->rows);
-	while (++i < fdf->colums)
+	while (++i < fdf->rows)
+	{
 		fdf->color[i] = (int *)malloc(sizeof(int) * fdf->colums);
+		fdf->z[i] = (int *)malloc(sizeof(int) * fdf->colums);
+	}
 }
 
-static void	fill_color(t_fdf *fdf,char **data, int i, int j)
+static void	fill(t_fdf *fdf, char **data, int i, int j)
 {
-	if (data[1])
-		fdf->color[i][j] = (int)strtol(data[1], NULL, 16);
-	else
-		fdf->color[i][j] = 0xFFFFFF;
+	if (ft_strncmp(data[0], "\n", 1) != 0)
+	{
+		fdf->z[i][j] = ft_atoi(data[0]);
+		if (data[1] != NULL)
+			fdf->color[i][j] = (int)strtol(data[1], NULL, 16);
+		else
+			fdf->color[i][j] = 0xFFFFFF;
+	}
 	free_split(data);
 }
 
-static	void	fill_z(t_fdf *fdf, int fd)
+static	void	read_file_to_init(t_fdf *fdf, int fd)
 {
 	int		i;
 	char	*line;
-	char 	**split;
-	char 	**data;
+	char	**split;
+	char	**data;
 	int		j;
 
 	reserve_memory(fdf);
@@ -52,9 +56,8 @@ static	void	fill_z(t_fdf *fdf, int fd)
 		j = -1;
 		while (split[++j])
 		{
-			data = ft_split(split[j],',');
-			fdf->z[i][j]=ft_atoi(data[0]);
-			fill_color(fdf, data, i, j);
+			data = ft_split(split[j], ',');
+			fill(fdf, data, i, j);
 		}
 		free_split(split);
 		free(line);
@@ -64,22 +67,27 @@ static	void	fill_z(t_fdf *fdf, int fd)
 	free(line);
 }
 
-void	init_size(t_fdf *fdf)
+static void	init_size(t_fdf *fdf)
 {
-	fdf->zoom = 30;
-	fdf->flat = 0.30;
+	if (fdf->colums * fdf->rows < 500)
+		fdf->zoom = 30;
+	else if (fdf->colums * fdf->rows < 1000)
+		fdf->zoom = 10;
+	else
+		fdf->zoom = 2;
+	fdf->flat = 0.3;
 	fdf->x_move = 500;
 	fdf->y_move = 250;
-	fdf->perspective = 'i';
+	fdf->view = 'i';
 }
 
-t_fdf *init_data_fdf(char *path)
+t_fdf	*init_data_fdf(char *path)
 {
 	int		cols;
 	int		rows;
 	int		fd;
 	t_fdf	*fdf;
-	
+
 	fd = open(path, O_RDONLY);
 	if (read(fd, 0, 0) || fd < 0)
 		return (NULL);
@@ -94,7 +102,7 @@ t_fdf *init_data_fdf(char *path)
 	fdf->rows = rows;
 	init_size(fdf);
 	fd = open(path, O_RDONLY);
-	fill_z(fdf, fd);
+	read_file_to_init(fdf, fd);
 	close(fd);
 	return (fdf);
 }

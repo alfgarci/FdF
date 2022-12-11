@@ -6,7 +6,7 @@
 #    By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 15:35:22 by alfgarci          #+#    #+#              #
-#    Updated: 2022/12/10 09:10:45 by alfgarci         ###   ########.fr        #
+#    Updated: 2022/12/11 16:04:57 by alfgarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC 	=	${SRC_DIR}/main.c \
 			${SRC_DIR}/init_data.c \
 			${SRC_DIR}/bresenham.c \
 			${SRC_DIR}/utils.c \
+			${SRC_DIR}/moves.c \
 			${SRC_DIR}/color.c
 	#---OBJ
 OBJ 	=	${SRC:.c=.o}

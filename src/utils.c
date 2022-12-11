@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 09:09:07 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/10 09:11:44 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/11 15:35:59 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,20 @@ void	free_split(char **split)
 	while (*(split + ++aux))
 		free(*(split + aux));
 	free(split);
+}
+
+void	free_fdf(t_fdf *fdf)
+{
+	int	i;
+
+	i = -1;
+	while (++i < fdf->rows)
+	{
+		free(fdf->z[i]);
+		free(fdf->color[i]);
+	}
+	free(fdf->z);
+	free(fdf->color);
+	free(fdf->data);
+	free(fdf);
 }
