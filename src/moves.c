@@ -6,20 +6,21 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 16:03:10 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/11 16:17:32 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:53:13 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "keycodes.h"
 
 static void	zoom(int keycode, t_fdf *fdf)
 {
-	if (keycode == 27 && (fdf->zoom - 1) > 0)
+	if (keycode == MINUS && (fdf->zoom - 1) > 0)
 	{
 		fdf->zoom -= 1;
 		fdf->y_move += 20;
 	}
-	else if (keycode == 24)
+	else if (keycode == PLUS)
 	{
 		fdf->zoom += 1;
 		fdf->y_move -= 20;
@@ -28,25 +29,25 @@ static void	zoom(int keycode, t_fdf *fdf)
 
 int	keys_p(int keycode, t_fdf *fdf)
 {
-	if (keycode == 53)
+	if (keycode == ESC)
 		exit(0);
-	else if (keycode == 45)
+	else if (keycode == N)
 		fdf->flat -= 0.1;
-	else if (keycode == 46)
+	else if (keycode == M)
 		fdf->flat += 0.1;
-	else if (keycode == 27 || keycode == 24)
+	else if (keycode == MINUS || keycode == PLUS)
 		zoom(keycode, fdf);
-	else if (keycode == 125)
+	else if (keycode == DOWN)
 		fdf->y_move += 20;
-	else if (keycode == 126)
+	else if (keycode == UP)
 		fdf->y_move -= 20;
-	else if (keycode == 124)
+	else if (keycode == RIGHT)
 		fdf->x_move += 20;
-	else if (keycode == 123)
+	else if (keycode == LEFT)
 		fdf->x_move -= 20;
-	else if (keycode == 34)
+	else if (keycode == I)
 		fdf->view = 'i';
-	else if (keycode == 31)
+	else if (keycode == O)
 		fdf->view = 'o';
 	re_draw(fdf);
 	return (0);
