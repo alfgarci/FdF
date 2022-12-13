@@ -3,7 +3,7 @@
 	Press + to increase zoom
   Use ARROWS to move
 
-![Alt Text](renders/42.jpg)
-![Alt Text](renders/t1.jpg)
-![Alt Text](renders/julia.jpg)
-![Alt Text](renders/100-6.jpg)
+![Alt Text](images/42.png)
+![Alt Text](images/t1.png)
+![Alt Text](images/julia.png)
+![Alt Text](images/100-6.png)
