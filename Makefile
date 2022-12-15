@@ -6,7 +6,7 @@
 #    By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 15:35:22 by alfgarci          #+#    #+#              #
-#    Updated: 2022/12/11 22:03:14 by alfgarci         ###   ########.fr        #
+#    Updated: 2022/12/15 16:51:56 by alfgarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ FLAGS		=	${C_FLAGS} ${FW_FLAGS} ${LIB_FLAGS}
 
 #---RECIPES------------------------------
 %.o : %.c
-	@${CC} ${H_FLAGS} -c $< -o $@
+	@${CC} ${C_FLAGS} ${H_FLAGS} -c $< -o $@
 
 all:	${NAME}
 

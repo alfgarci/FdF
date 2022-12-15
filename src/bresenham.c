@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:49:55 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/11 15:30:54 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:53:39 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	resize(t_point	*s, t_point *e, t_fdf *fdf)
 	e->y += fdf->y_move;
 }
 
-static t_alg	*get_init_data(t_point *s, t_point *e, t_fdf *fdf)
+static t_alg	*get_init_data(t_point *s, t_point *e)
 {
 	t_alg	*instance;
 	int		max;
@@ -76,7 +76,7 @@ void	bresenham(t_point *s, t_point *e, t_fdf *fdf)
 	perspective(s, fdf);
 	perspective(e, fdf);
 	resize(s, e, fdf);
-	instance = get_init_data(s, e, fdf);
+	instance = get_init_data(s, e);
 	i = 0;
 	while ((int)(s->x - e->x) || (int)(s->y - e->y))
 	{

@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 09:48:42 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/11 12:35:57 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:52:58 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	check_map(int fd, int *r, int *c)
 	int		cols;
 	int		elems;
 	int		rows;
-	int		first_line;
 	char	*line;
 
 	rows = 0;

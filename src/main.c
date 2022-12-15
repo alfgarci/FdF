@@ -6,7 +6,7 @@
 /*   By: alfgarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:47:37 by alfgarci          #+#    #+#             */
-/*   Updated: 2022/12/11 22:25:24 by alfgarci         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:52:41 by alfgarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_fdf	*fdf;
 
+	(void)argc;
 	fdf = init_data_fdf(argv[1]);
 	if (fdf == NULL)
 		return (-1);
