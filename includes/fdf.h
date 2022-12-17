@@ -87,6 +87,8 @@ int		str_to_hex(char *str);
 /*free_data.c*/
 void	free_split(char **split);
 void	free_fdf(t_fdf *fdf);
+void	free_error_color(t_fdf *fdf, int size);
+void	free_error_z(t_fdf *fdf, int size);
 
 /*moves.c*/
 int		keys_p(int keycode, t_fdf *fdf);

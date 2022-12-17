@@ -34,6 +34,36 @@ void	free_fdf(t_fdf *fdf)
 	}
 	free(fdf->z);
 	free(fdf->color);
-	free(fdf->data);
+	if (fdf->data)
+		free(fdf->data);
 	free(fdf);
+}
+
+void	free_error_color(t_fdf *fdf, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size)
+		free(fdf->color[i]);
+	free(fdf->color);
+	free(fdf->z);
+	free(fdf);
+	exit(-1);
+}
+
+void	free_error_z(t_fdf *fdf, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < fdf->rows)
+		free(fdf->color[i]);
+	free(fdf->color);
+	i = -1;
+	while (++i < size)
+		free(fdf->z[i]);
+	free(fdf->z);
+	free(fdf);
+	exit(-1);
 }

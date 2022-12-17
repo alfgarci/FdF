@@ -23,6 +23,11 @@ int	main(int argc, char **argv)
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, HEIGHT, WIDTH, "alfgarci's Fdf");
 	fdf->data = (t_data *)malloc(sizeof(t_data));
+	if (!fdf->data)
+	{
+		free_fdf(fdf);
+		return (-1);
+	}
 	fdf->data->img = mlx_new_image(fdf->mlx, HEIGHT, WIDTH);
 	fdf->data->addr = mlx_get_data_addr(fdf->data->img, &fdf->data->bpp,
 			&fdf->data->line_l, &fdf->data->endian);

@@ -18,11 +18,26 @@ static	void	reserve_memory(t_fdf *fdf)
 
 	i = -1;
 	fdf->z = (int **)malloc(sizeof(int *) * fdf->rows);
+	if (!fdf->z)
+		exit(-1);
 	fdf->color = (int **)malloc(sizeof(int *) * fdf->rows);
+	if (!fdf->color)
+	{
+		free(fdf->z);
+		exit(-1);
+	}
 	while (++i < fdf->rows)
 	{
 		fdf->color[i] = (int *)malloc(sizeof(int) * fdf->colums);
+		if (!fdf->color[i])
+			free_error_color(fdf, i);
+	}
+	i = -1;
+	while (++i < fdf->rows)
+	{
 		fdf->z[i] = (int *)malloc(sizeof(int) * fdf->colums);
+		if (!fdf->z[i])
+			free_error_z(fdf, i);
 	}
 }
 

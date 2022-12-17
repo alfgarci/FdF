@@ -17,6 +17,11 @@ static t_point	*make_point(int x, int y, t_fdf *fdf)
 	t_point	*new;
 
 	new = (t_point *)malloc(sizeof(t_point));
+	if (!new)
+	{
+		free_fdf(fdf);
+		exit(-1);
+	}
 	new->x = (double)x;
 	new->y = (double)y;
 	new->z = fdf->z[y][x];

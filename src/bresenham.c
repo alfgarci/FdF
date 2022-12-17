@@ -38,7 +38,15 @@ static void	resize(t_point	*s, t_point *e, t_fdf *fdf)
 	e->y += fdf->y_move;
 }
 
-static t_alg	*get_init_data(t_point *s, t_point *e)
+static void	free_error(t_point *s, t_point *e, t_fdf *fdf)
+{
+	free(s);
+	free(e);
+	free_fdf(fdf);
+	exit(-1);
+}
+
+static t_alg	*get_init_data(t_point *s, t_point *e, t_fdf *fdf)
 {
 	t_alg	*instance;
 	int		max;
@@ -48,6 +56,8 @@ static t_alg	*get_init_data(t_point *s, t_point *e)
 	copy_x = s->x;
 	copy_y = s->y;
 	instance = (t_alg *)malloc(sizeof(t_alg));
+	if (!instance)
+		free_error(s, e, fdf);
 	instance->x_move = e->x - s->x;
 	instance->y_move = e->y - s->y;
 	max = max_num(module(instance->x_move), module(instance->y_move));
@@ -76,7 +86,7 @@ void	bresenham(t_point *s, t_point *e, t_fdf *fdf)
 	perspective(s, fdf);
 	perspective(e, fdf);
 	resize(s, e, fdf);
-	instance = get_init_data(s, e);
+	instance = get_init_data(s, e, fdf);
 	i = 0;
 	while ((int)(s->x - e->x) || (int)(s->y - e->y))
 	{
